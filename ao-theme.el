@@ -216,7 +216,7 @@ over it."
     ;;; Matching parentheses (ui.cursor.match): a dark chip with an orange
     ;;; glyph, which the block cursor inverts back into an orange block on
     ;;; the paren at point
-    (bg-paren-match      . deep-abyss)
+    (bg-paren-match      . pitch-black)
     (fg-paren-match      . blaze-orange)
     (bg-paren-expression . blaze-orange)
 
@@ -481,7 +481,7 @@ or another KEY to alias.")
     ;;; Matching parentheses (ui.cursor.match): a dark chip with an orange
     ;;; glyph, which the block cursor inverts back into an orange block on
     ;;; the paren at point
-    (bg-paren-match      . deep-abyss)
+    (bg-paren-match      . pitch-black)
     (fg-paren-match      . blaze-orange-pure)
     (bg-paren-expression . blaze-orange-pure)
 

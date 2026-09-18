@@ -95,7 +95,7 @@ A value may be a hex string, `unspecified`, or another palette key:
 ;; Helix look -- an orange block on both -- swap the two back:
 (setq ao-theme-common-palette-overrides
       '((bg-paren-match accent)
-        (fg-paren-match "#080d15")))
+        (fg-paren-match "#000000")))
 ```
 
 `ao-theme-get-color-value` reads a colour out of the loaded variant, for
