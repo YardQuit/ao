@@ -417,6 +417,7 @@ or another KEY to alias.")
     (docs-smoke-50  . "#f5f5f5")
     (docs-smoke-70  . "#f0f0f0")
     (docs-smoke-90  . "#e1e1e1")
+    (docs-smoke-blue . "#d9e2f0")
     (docs-gray-10   . "#c1c1c1")
     (docs-gray-30   . "#8e8e8e")
     (docs-gray-70   . "#5d5d5d")
@@ -476,7 +477,7 @@ or another KEY to alias.")
     ;;; otherwise secondarily marked line stays distinct from the live one
     (bg-region-secondary . deep-purple)
     (fg-region-secondary . docs-white)
-    (bg-hl-line     . docs-smoke-50)
+    (bg-hl-line     . docs-smoke-blue)
 
     ;;; Fringe
     (bg-fringe . docs-white)

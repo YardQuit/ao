@@ -87,9 +87,16 @@ Four booleans, each off by default; re-load the theme after changing one:
 In a text terminal the terminal draws its own cursor and ignores the
 `cursor` face, so a terminal whose cursor is a pale grey leaves it
 invisible on the light variant's white ground.  `ao-theme-tty-cursor-color`
-asks the terminal for a colour with an OSC 12 escape sequence: `t` (the
-default) uses the palette's cursor amber, a string names a colour of your
-own, `nil` leaves the terminal alone.  The terminal's own colour is
+asks the terminal for a colour with an OSC 12 escape sequence:
+
+```elisp
+(setq ao-theme-tty-cursor-color t)          ; the palette's amber (default)
+(setq ao-theme-tty-cursor-color "#000000")  ; a colour of your own
+(setq ao-theme-tty-cursor-color nil)        ; leave the terminal alone
+```
+
+The value is read whenever a theme is enabled or a terminal frame is
+created, so set it before loading the theme.  The terminal's own colour is
 restored when the theme is disabled, and terminals that ignore OSC 12 are
 unaffected.
 
