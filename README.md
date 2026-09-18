@@ -84,6 +84,15 @@ Four booleans, each off by default; re-load the theme after changing one:
 - `ao-theme-mixed-fonts` — fixed-pitch code inside prose
 - `ao-theme-variable-pitch-ui` — variable-pitch mode line, tab bar, header line
 
+In a text terminal the terminal draws its own cursor and ignores the
+`cursor` face, so a terminal whose cursor is a pale grey leaves it
+invisible on the light variant's white ground.  `ao-theme-tty-cursor-color`
+asks the terminal for a colour with an OSC 12 escape sequence: `t` (the
+default) uses the palette's cursor amber, a string names a colour of your
+own, `nil` leaves the terminal alone.  The terminal's own colour is
+restored when the theme is disabled, and terminals that ignore OSC 12 are
+unaffected.
+
 Colours are overridable without forking, via
 `ao-theme-common-palette-overrides` and the per-variant
 `ao-theme-dark-palette-overrides` / `ao-theme-light-palette-overrides`.

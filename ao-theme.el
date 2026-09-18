@@ -107,6 +107,22 @@ Run by `ao-theme-toggle', `ao-theme-load-dark' and
   :group 'ao-theme
   :type 'hook)
 
+(defcustom ao-theme-tty-cursor-color t
+  "Cursor colour for text terminals, which draw their own cursor.
+A terminal paints the cursor itself and ignores the `cursor\' face, so a
+terminal whose own cursor colour is a pale grey leaves the cursor
+invisible on the light variant\'s white ground.  When this option is
+non-nil the theme asks the terminal for a colour with an OSC 12 escape
+sequence: t uses the palette\'s `cursor\' colour, a string names a colour
+of your own, and nil leaves the terminal\'s setting alone.  The
+terminal\'s own colour is restored when the theme is disabled.
+
+Terminals that ignore OSC 12 are unaffected."
+  :group 'ao-theme
+  :type '(choice (const :tag "The palette's cursor colour" t)
+                 (const :tag "Leave the terminal alone" nil)
+                 (string :tag "Colour")))
+
 (defcustom ao-theme-common-palette-overrides nil
   "Palette overrides applied to both AO variants.
 Each element is a list of (KEY VALUE), where KEY is a palette symbol
@@ -187,6 +203,10 @@ over it."
     (fg-region      . ao-white)
     (bg-mark-select . light-purple)
     (fg-mark-select . winter-sky)
+    ;;; Secondary selection: a step darker than the region, so a banked or
+    ;;; otherwise secondarily marked line stays distinct from the live one
+    (bg-region-secondary . deep-purple)
+    (fg-region-secondary . ao-white)
     (bg-hl-line     . nightfall-blue)
 
     ;;; Fringe: Helix draws the gutter on the main background
@@ -452,6 +472,10 @@ or another KEY to alias.")
     (fg-region      . docs-white)
     (bg-mark-select . selection-purple)
     (fg-mark-select . docs-white)
+    ;;; Secondary selection: a step darker than the region, so a banked or
+    ;;; otherwise secondarily marked line stays distinct from the live one
+    (bg-region-secondary . deep-purple)
+    (fg-region-secondary . docs-white)
     (bg-hl-line     . docs-smoke-50)
 
     ;;; Fringe
@@ -814,7 +838,7 @@ Useful for deriving faces of your own, for example:
       (cursor ((t :background ,(c 'cursor))))
       (region ((t :background ,(c 'bg-region) :foreground ,(c 'fg-region))))
       (highlight ((t :background ,(c 'bg-hover) :foreground ,(c 'fg-main))))
-      (secondary-selection ((t :background ,(c 'bg-hover-secondary) :foreground ,(c 'fg-main))))
+      (secondary-selection ((t :background ,(c 'bg-region-secondary) :foreground ,(c 'fg-region-secondary))))
       (match ((t :background ,(c 'bg-magenta-subtle) :foreground ,(c 'fg-main))))
       (shadow ((t :foreground ,(c 'fg-dim))))
       (success ((t :inherit bold :foreground ,(c 'info))))
@@ -1790,6 +1814,58 @@ Loads the first of them when neither is currently enabled, and runs
     (unless (and one two)
       (user-error "`ao-theme-to-toggle' must name exactly two themes"))
     (ao-theme--load (if (memq one custom-enabled-themes) two one))))
+
+(defun ao-theme--enabled-p ()
+  "Return non-nil when one of the AO themes is enabled."
+  (seq-some (lambda (theme) (memq theme '(ao-dark ao-light)))
+            custom-enabled-themes))
+
+(defun ao-theme--tty-cursor-sequence ()
+  "Return the OSC 12 sequence for the terminal cursor, or nil for none."
+  (let ((color (cond
+                ((stringp ao-theme-tty-cursor-color) ao-theme-tty-cursor-color)
+                ((and ao-theme-tty-cursor-color ao-theme--current-palette)
+                 (ao-theme--color 'cursor ao-theme--current-palette)))))
+    (and (stringp color) (format "\e]12;%s\a" color))))
+
+(defun ao-theme--apply-tty-cursor (&optional frame)
+  "Ask text terminals to draw the cursor in the theme\'s cursor colour.
+With FRAME, only that frame\'s terminal is asked; otherwise every live
+text terminal is.  Graphical frames are left alone: there the `cursor\'
+face already decides."
+  (when-let* (((not noninteractive))    ; batch writes to stdout, not a screen
+              ((ao-theme--enabled-p))
+              (sequence (ao-theme--tty-cursor-sequence)))
+    (dolist (terminal (if frame (list (frame-terminal frame)) (terminal-list)))
+      (when (eq (terminal-live-p terminal) t)
+        (send-string-to-terminal sequence terminal)))))
+
+(defun ao-theme--reset-tty-cursor (&rest _)
+  "Give text terminals their own cursor colour back."
+  (unless noninteractive
+    (dolist (terminal (terminal-list))
+      (when (eq (terminal-live-p terminal) t)
+        (send-string-to-terminal "\e]112\a" terminal)))))
+
+(defun ao-theme--theme-enabled (theme)
+  "Apply the terminal cursor colour when THEME is one of ours."
+  (when (memq theme '(ao-dark ao-light))
+    (ao-theme--apply-tty-cursor)))
+
+(defun ao-theme--theme-disabled (theme)
+  "Restore the terminal cursor colour when THEME is one of ours."
+  (when (and (memq theme '(ao-dark ao-light))
+             (not (ao-theme--enabled-p)))
+    (ao-theme--reset-tty-cursor)))
+
+(if (boundp 'enable-theme-functions)      ; Emacs 29.1 and later
+    (progn
+      (add-hook 'enable-theme-functions #'ao-theme--theme-enabled)
+      (add-hook 'disable-theme-functions #'ao-theme--theme-disabled))
+  (add-hook 'ao-theme-after-load-hook #'ao-theme--apply-tty-cursor))
+
+;; A terminal frame opened later starts with the terminal's own cursor.
+(add-hook 'after-make-frame-functions #'ao-theme--apply-tty-cursor)
 
 ;;;###autoload
 (when load-file-name
