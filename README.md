@@ -90,11 +90,12 @@ Colours are overridable without forking, via
 A value may be a hex string, `unspecified`, or another palette key:
 
 ```elisp
-;; Helix draws the matching paren as an orange block; for the inverse,
-;; orange glyph on black:
+;; The matching paren is an orange glyph on a dark chip, which the block
+;; cursor inverts into an orange block on the paren at point.  For the
+;; Helix look -- an orange block on both -- swap the two back:
 (setq ao-theme-common-palette-overrides
-      '((bg-paren-match "#000000")
-        (fg-paren-match accent)))
+      '((bg-paren-match accent)
+        (fg-paren-match "#080d15")))
 ```
 
 `ao-theme-get-color-value` reads a colour out of the loaded variant, for

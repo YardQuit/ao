@@ -213,9 +213,12 @@ over it."
     (bg-line-number-inactive . deep-abyss)
     (fg-line-number-inactive . slate-gray)
 
-    ;;; Matching parentheses (ui.cursor.match)
-    (bg-paren-match . blaze-orange)
-    (fg-paren-match . deep-abyss)
+    ;;; Matching parentheses (ui.cursor.match): a dark chip with an orange
+    ;;; glyph, which the block cursor inverts back into an orange block on
+    ;;; the paren at point
+    (bg-paren-match      . deep-abyss)
+    (fg-paren-match      . blaze-orange)
+    (bg-paren-expression . blaze-orange)
 
     ;;; Menus, popups and hover (ui.menu and ui.popup)
     (bg-completion      . twilight-blue)
@@ -475,9 +478,12 @@ or another KEY to alias.")
     (bg-line-number-inactive . docs-white)
     (fg-line-number-inactive . docs-gray-70)
 
-    ;;; Matching parentheses (ui.cursor.match)
-    (bg-paren-match . blaze-orange-pure)
-    (fg-paren-match . deep-abyss)
+    ;;; Matching parentheses (ui.cursor.match): a dark chip with an orange
+    ;;; glyph, which the block cursor inverts back into an orange block on
+    ;;; the paren at point
+    (bg-paren-match      . deep-abyss)
+    (fg-paren-match      . blaze-orange-pure)
+    (bg-paren-expression . blaze-orange-pure)
 
     ;;; Menus, popups and hover
     (bg-completion      . "#e7f0fb")
@@ -839,7 +845,7 @@ Useful for deriving faces of your own, for example:
       (hl-line ((t :background ,(c 'bg-hl-line) :extend t)))
       (fill-column-indicator ((t :height 1 :background ,(c 'bg-active) :foreground ,(c 'bg-active))))
       (show-paren-match ((t :background ,(c 'bg-paren-match) :foreground ,(c 'fg-paren-match))))
-      (show-paren-match-expression ((t :background ,(c 'bg-paren-match))))
+      (show-paren-match-expression ((t :background ,(c 'bg-paren-expression))))
       (show-paren-mismatch ((t :inherit ao-theme-prominent-error)))
       (cursor-intangible ((t :inherit shadow)))
       (glyphless-char ((t :inherit shadow :height 0.6)))
