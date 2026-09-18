@@ -1,4 +1,4 @@
-# ao.theme
+# ao
 
 Ao for Emacs — a dark and a light theme built from one palette, with a
 toggle between them. Standalone: no dependency on any other theme.
