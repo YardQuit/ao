@@ -478,10 +478,11 @@ or another KEY to alias.")
     (bg-line-number-inactive . docs-white)
     (fg-line-number-inactive . docs-gray-70)
 
-    ;;; Matching parentheses (ui.cursor.match): a dark chip with an orange
-    ;;; glyph, which the block cursor inverts back into an orange block on
-    ;;; the paren at point
-    (bg-paren-match      . pitch-black)
+    ;;; Matching parentheses (ui.cursor.match): no chip in the light variant.
+    ;;; The glyph under the block cursor takes this background, so leaving it
+    ;;; on the paper ground gives the paren at point a white glyph on orange,
+    ;;; matching the cursor everywhere else; the match is a bare orange glyph
+    (bg-paren-match      . bg-main)
     (fg-paren-match      . blaze-orange-pure)
     (bg-paren-expression . blaze-orange-pure)
 
