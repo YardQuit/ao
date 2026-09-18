@@ -1,0 +1,122 @@
+# ao.theme
+
+Ao for Emacs — a dark and a light theme built from one palette, with a
+toggle between them. Standalone: no dependency on any other theme.
+
+```elisp
+(add-to-list 'load-path        "/path/to/ao.theme")
+(add-to-list 'custom-theme-load-path "/path/to/ao.theme")
+(require 'ao-theme)
+(ao-theme-load-dark)     ; or (load-theme 'ao-dark t)
+```
+
+| Command | Does |
+| --- | --- |
+| `ao-theme-toggle` | switch between `ao-dark` and `ao-light` |
+| `ao-theme-load-dark` / `ao-theme-load-light` | load one directly |
+
+All three disable the currently enabled themes first and then run
+`ao-theme-after-load-hook`. A plain `load-theme` does neither.
+
+## Where the colours come from
+
+**`ao-dark`** is the [Ao theme for the Helix editor](https://github.com/helix-editor/helix/blob/master/runtime/themes/ao.toml)
+(by YardQuit), carried over hex-for-hex — ground, syntax, gutter,
+statusline and diagnostics all match the Helix theme exactly.
+
+**`ao-light`** takes its ground and chrome from the
+[Fedora documentation site](https://docs.fedoraproject.org): white page,
+`#222222` body text, `#fafafa` panels, `#e1e1e1` borders, `#1565c0`
+links. The accents are the Ao colours at their own hues, darkened until
+each clears 4.5:1 on the page — the Helix palette is tuned for a dark
+ground and is unreadable on white as-is.
+
+The **mode line is the same in both variants**: `#2c5484` on `#f3f4f6`,
+as in Helix's `ui.statusline`. The tab bar mirrors it, as Helix's
+bufferline does.
+
+Org **code blocks** use the site's code-block background —
+`#fafafa` in `ao-light`, exactly Fedora's `--pre-background` — while the
+text in them stays Ao.
+
+### Signature colours
+
+| Role | Dark | Light |
+| --- | --- | --- |
+| Ground | `#080d15` deep abyss | `#ffffff` |
+| Text | `#dadada` | `#222222` |
+| Cursor, matching paren | `#ff9000` blaze orange | `#ff9000` |
+| Region | `#7533bd` light purple | `#7533bd` |
+| Mode line | `#2c5484` twilight blue | `#2c5484` |
+| Comment | `#838a97` slate gray | `#6a7282` |
+| Code block | `#0d1526` | `#fafafa` |
+
+### Syntax, following Helix's `ao.toml`
+
+| | Dark | Light |
+| --- | --- | --- |
+| keyword | `#fa7970` | `#c5210f` |
+| string, constant | `#45b1e8` | `#0a7ab3` |
+| function | `#d2a8ff` | `#7d2ae8` |
+| method, member | `#81be83` | `#3b7f3d` |
+| variable, bracket | `#ff9000` | `#a85f00` |
+| parameter, escape | `#ffba00` | `#946c00` |
+| type, operator, punctuation | `#dadada` | `#222222` |
+
+## Contrast
+
+Every face that sets a foreground was checked against the background it
+actually lands on, following `:inherit` chains. Of 678 such faces, all
+meet 4.5:1 in `ao-dark`; in `ao-light` all do except the six 1px
+divider and border faces, which sit at 3.28:1 — above the 3:1 that WCAG
+asks of non-text UI components.
+
+A few faces set a foreground equal to their background on purpose and
+are exempt: `org-hide`, `org-indent`, `fill-column-indicator`, the
+`term-color-*` swatches, and the `whitespace-*` markers.
+
+## Customising
+
+Four booleans, each off by default; re-load the theme after changing one:
+
+- `ao-theme-bold-constructs` — bold keywords, types, builtins
+- `ao-theme-italic-constructs` — italic comments and doc strings
+- `ao-theme-mixed-fonts` — fixed-pitch code inside prose
+- `ao-theme-variable-pitch-ui` — variable-pitch mode line, tab bar, header line
+
+Colours are overridable without forking, via
+`ao-theme-common-palette-overrides` and the per-variant
+`ao-theme-dark-palette-overrides` / `ao-theme-light-palette-overrides`.
+A value may be a hex string, `unspecified`, or another palette key:
+
+```elisp
+;; Helix draws the matching paren as an orange block; for the inverse,
+;; orange glyph on black:
+(setq ao-theme-common-palette-overrides
+      '((bg-paren-match "#000000")
+        (fg-paren-match accent)))
+```
+
+`ao-theme-get-color-value` reads a colour out of the loaded variant, for
+faces of your own:
+
+```elisp
+(set-face-attribute 'some-face nil
+                    :foreground (ao-theme-get-color-value 'accent))
+```
+
+## Layout
+
+| File | Holds |
+| --- | --- |
+| `ao-theme.el` | both palettes, the 844 face specs, the commands |
+| `ao-dark-theme.el` / `ao-light-theme.el` | `deftheme` for each variant |
+
+Faces cover core Emacs and the packages in use here: Org, Denote, Magit
+and diff/ediff/smerge, Dired and Dirvish, the Vertico/Corfu/Consult/
+Marginalia/Orderless stack, which-key, Transient, Eglot, Flymake, Jinx,
+ERC, mu4e, Ement, Ibuffer, Speedbar, and the rest.
+
+## Licence
+
+GPL-3.0-or-later.
