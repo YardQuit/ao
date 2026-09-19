@@ -4,7 +4,7 @@
 
 ;; Author: Michael Jones <michael.jones.nzzn@use.startmail.com>
 ;; Maintainer: Michael Jones <michael.jones.nzzn@use.startmail.com>
-;; URL: https://github.com/mjones/ao.theme
+;; URL: https://github.com/YardQuit/ao
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "28.1"))
 ;; Keywords: faces, theme, accessibility
@@ -27,7 +27,13 @@
 ;;; Commentary:
 ;;
 ;; AO is a pair of themes -- `ao-dark' and `ao-light' -- built around a
-;; small set of signature colours:
+;; small set of signature colours.  `ao-dark' is the AO theme for the
+;; Helix editor carried over hex-for-hex; `ao-light' is that same
+;; palette worked for a light ground, each accent keeping its hue.  The
+;; palette is inspired by Fedora's official colour scheme, and "Ao" is
+;; the Japanese 青, blue.
+;;
+;; The signature colours:
 ;;
 ;;   * an amber accent (#ff9000) for the cursor, the active line number
 ;;     and matching parentheses;
@@ -36,8 +42,8 @@
 ;;   * a steel-blue mode line that the tab bar mirrors.
 ;;
 ;; The dark variant sits on a deep navy ground (#080d15); the light
-;; variant on a warm paper ground (#fbf7f0).  Both carry the same amber
-;; and violet accents, so the two halves read as one theme.
+;; variant on a white ground (#ffffff).  Both carry the same amber and
+;; violet accents, so the two halves read as one theme.
 ;;
 ;; Usage:
 ;;

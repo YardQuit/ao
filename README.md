@@ -1,7 +1,14 @@
 # Ao
 
-Ao for Emacs — a dark and a light theme built from one palette, with a
-toggle between them. Standalone: no dependency on any other theme.
+Ao for Emacs — still the [Ao theme for the Helix
+editor](https://github.com/helix-editor/helix/blob/master/runtime/themes/ao.toml),
+carried over hex-for-hex and paired with a new light variant built from
+the same palette, with a toggle between them. Standalone: no dependency
+on any other theme.
+
+_Ao_ is 青 (あお), Japanese for blue — traditionally the whole blue-green
+range, which is why 青信号 ("ao signal") is a green traffic light. The
+palette is inspired by Fedora's official colour scheme.
 
 ```elisp
 (add-to-list 'load-path        "/path/to/ao.theme")
@@ -20,24 +27,24 @@ All three disable the currently enabled themes first and then run
 
 ## Where the colours come from
 
-**`ao-dark`** is the [Ao theme for the Helix editor](https://github.com/helix-editor/helix/blob/master/runtime/themes/ao.toml)
-(by YardQuit), carried over hex-for-hex — ground, syntax, gutter,
-statusline and diagnostics all match the Helix theme exactly.
+**`ao-dark`** is the Helix Ao theme, by the same author, carried over
+hex-for-hex: ground, syntax, gutter, statusline and diagnostics all
+match it exactly.
 
-**`ao-light`** takes its ground and chrome from the
-[Fedora documentation site](https://docs.fedoraproject.org): white page,
-`#222222` body text, `#fafafa` panels, `#e1e1e1` borders, `#1565c0`
-links. The accents are the Ao colours at their own hues, darkened until
-each clears 4.5:1 on the page — the Helix palette is tuned for a dark
-ground and is unreadable on white as-is.
+**`ao-light`** is that same Ao palette worked for a light ground, not a
+second theme wearing the name. Every accent keeps its Ao hue and is
+darkened only until it clears 4.5:1 on the page — the Helix colours are
+tuned for a dark ground and are unreadable on white as-is. The neutrals
+around them — white page, `#222222` body text, `#fafafa` panels,
+`#e1e1e1` borders, `#1565c0` links — follow Fedora's official colour
+scheme.
 
 The **mode line is the same in both variants**: `#2c5484` on `#f3f4f6`,
 as in Helix's `ui.statusline`. The tab bar mirrors it, as Helix's
 bufferline does.
 
-Org **code blocks** use the site's code-block background —
-`#fafafa` in `ao-light`, exactly Fedora's `--pre-background` — while the
-text in them stays Ao.
+Org **code blocks** sit on `#fafafa` in `ao-light` — the Fedora panel
+tone — while the text in them stays Ao.
 
 ### Signature colours
 
@@ -84,9 +91,12 @@ Four booleans, each off by default; re-load the theme after changing one:
 - `ao-theme-mixed-fonts` — fixed-pitch code inside prose
 - `ao-theme-variable-pitch-ui` — variable-pitch mode line, tab bar, header line
 
-In a text terminal the terminal draws its own cursor and ignores the
-`cursor` face, so a terminal whose cursor is a pale grey leaves it
-invisible on the light variant's white ground.  `ao-theme-tty-cursor-color`
+`ao-theme-tty-cursor-color` applies to **text-terminal frames only**
+(`emacs -nw`, `emacsclient -nw`); graphical frames are left alone, where
+the `cursor` face already decides and a palette override is the way to
+change it. In a text terminal the terminal draws its own cursor and
+ignores the `cursor` face, so a terminal whose cursor is a pale grey
+leaves it invisible on the light variant's white ground.  This option
 asks the terminal for a colour with an OSC 12 escape sequence:
 
 ```elisp

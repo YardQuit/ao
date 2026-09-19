@@ -3,7 +3,7 @@
 ;; Copyright (C) 2026 Michael Jones
 
 ;; Author: Michael Jones <michael.jones.nzzn@use.startmail.com>
-;; URL: https://github.com/mjones/ao.theme
+;; URL: https://github.com/YardQuit/ao
 ;; Package-Requires: ((emacs "28.1"))
 ;; Keywords: faces, theme
 
@@ -24,9 +24,9 @@
 
 ;;; Commentary:
 ;;
-;; The light variant of AO: a warm paper ground carrying the same amber
-;; cursor and violet region as the dark variant.  See the `ao-theme'
-;; library for the palette and the user options.
+;; The light variant of AO: the dark variant's own colours worked for a
+;; white ground, carrying the same amber cursor and violet region.  See
+;; the `ao-theme' library for the palette and the user options.
 
 ;;; Code:
 
@@ -34,7 +34,7 @@
 
 (deftheme ao-light
   "Light variant of the AO theme.
-A warm paper ground (#fbf7f0) with an amber accent (#ff9000), a violet
+A white ground (#ffffff) with an amber accent (#ff9000), a violet
 selection (#7533bd) and a mode line mirrored by the tab bar."
   :background-mode 'light
   :kind 'color-scheme

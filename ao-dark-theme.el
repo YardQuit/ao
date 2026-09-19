@@ -3,7 +3,7 @@
 ;; Copyright (C) 2026 Michael Jones
 
 ;; Author: Michael Jones <michael.jones.nzzn@use.startmail.com>
-;; URL: https://github.com/mjones/ao.theme
+;; URL: https://github.com/YardQuit/ao
 ;; Package-Requires: ((emacs "28.1"))
 ;; Keywords: faces, theme
 
@@ -25,7 +25,8 @@
 ;;; Commentary:
 ;;
 ;; The dark variant of AO: a deep navy ground with an amber cursor, a
-;; violet region and a steel-blue mode line.  See the `ao-theme' library
+;; violet region and a steel-blue mode line, carried over hex-for-hex
+;; from the AO theme for the Helix editor.  See the `ao-theme' library
 ;; for the palette and the user options.
 
 ;;; Code:
