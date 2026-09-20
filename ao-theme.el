@@ -2,8 +2,8 @@
 
 ;; Copyright (C) 2026 Michael Jones
 
-;; Author: Michael Jones <michael.jones.nzzn@use.startmail.com>
-;; Maintainer: Michael Jones <michael.jones.nzzn@use.startmail.com>
+;; Author: Michael A Jones <yardquit@pm.me>
+;; Maintainer: Michael A Jones <yardquit@pm.me>
 ;; URL: https://github.com/YardQuit/ao
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "28.1"))
